@@ -1,17 +1,21 @@
 import { useState, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Menu, X, ShoppingBag, User, Search } from 'lucide-react';
+import { useCart } from '@/contexts/CartContext';
 
 const navLinks = [
-  { label: 'Holiday Sale', href: '#' },
-  { label: 'New Arrivals', href: '#' },
-  { label: 'Collections', href: '#' },
-  { label: 'Gifts', href: '#' },
+  { label: 'Holiday Sale', href: '/holiday-sale' },
+  { label: 'New Arrivals', href: '/new-arrivals' },
+  { label: 'Collections', href: '/collections' },
+  { label: 'Gifts', href: '/gifts' },
 ];
 
 export const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { setIsCartOpen, totalItems } = useCart();
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -20,6 +24,8 @@ export const Header = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const isActive = (href: string) => location.pathname === href;
 
   return (
     <>
@@ -39,20 +45,24 @@ export const Header = () => {
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between h-16 md:h-20">
             {/* Logo */}
-            <a href="/" className="font-serif text-2xl font-bold text-foreground">
-              <span className="text-gradient-holiday">LUXE</span>
-            </a>
+            <Link to="/" className="font-serif text-2xl font-bold text-foreground">
+              <span className="text-gradient-holiday">NOIR</span>
+            </Link>
 
             {/* Desktop Navigation */}
             <nav className="hidden md:flex items-center gap-8">
               {navLinks.map((link) => (
-                <a
+                <Link
                   key={link.label}
-                  href={link.href}
-                  className="text-foreground/80 hover:text-primary transition-colors text-sm uppercase tracking-wider font-medium"
+                  to={link.href}
+                  className={`text-sm uppercase tracking-wider font-medium transition-colors ${
+                    isActive(link.href)
+                      ? 'text-primary'
+                      : 'text-foreground/80 hover:text-primary'
+                  }`}
                 >
                   {link.label}
-                </a>
+                </Link>
               ))}
             </nav>
 
@@ -64,11 +74,16 @@ export const Header = () => {
               <button className="hidden sm:flex p-2 text-foreground/80 hover:text-primary transition-colors">
                 <User className="w-5 h-5" />
               </button>
-              <button className="relative p-2 text-foreground/80 hover:text-primary transition-colors">
+              <button 
+                className="relative p-2 text-foreground/80 hover:text-primary transition-colors"
+                onClick={() => setIsCartOpen(true)}
+              >
                 <ShoppingBag className="w-5 h-5" />
-                <span className="absolute -top-1 -right-1 w-5 h-5 bg-primary text-primary-foreground text-xs rounded-full flex items-center justify-center font-medium">
-                  3
-                </span>
+                {totalItems > 0 && (
+                  <span className="absolute -top-1 -right-1 w-5 h-5 bg-primary text-primary-foreground text-xs rounded-full flex items-center justify-center font-medium">
+                    {totalItems}
+                  </span>
+                )}
               </button>
 
               {/* Mobile Menu Button */}
@@ -87,17 +102,29 @@ export const Header = () => {
           <div className="md:hidden bg-background border-b border-border">
             <nav className="container mx-auto px-4 py-4 flex flex-col gap-4">
               {navLinks.map((link) => (
-                <a
+                <Link
                   key={link.label}
-                  href={link.href}
-                  className="text-foreground py-2 text-sm uppercase tracking-wider font-medium"
+                  to={link.href}
+                  className={`py-2 text-sm uppercase tracking-wider font-medium ${
+                    isActive(link.href) ? 'text-primary' : 'text-foreground'
+                  }`}
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   {link.label}
-                </a>
+                </Link>
               ))}
-              <Button variant="holiday" className="mt-2">
-                Shop Now
+              <div className="pt-4 border-t border-border flex flex-col gap-2">
+                <Link to="/email-template" onClick={() => setIsMobileMenuOpen(false)} className="text-muted-foreground text-sm">
+                  Email Template
+                </Link>
+                <Link to="/ad-mockups" onClick={() => setIsMobileMenuOpen(false)} className="text-muted-foreground text-sm">
+                  Ad Mockups
+                </Link>
+              </div>
+              <Button variant="holiday" className="mt-2" asChild>
+                <Link to="/holiday-sale" onClick={() => setIsMobileMenuOpen(false)}>
+                  Shop Now
+                </Link>
               </Button>
             </nav>
           </div>

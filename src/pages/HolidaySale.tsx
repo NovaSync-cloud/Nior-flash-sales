@@ -37,7 +37,7 @@ const HolidaySale = () => {
               <p className="text-sm text-muted-foreground mb-3 flex items-center justify-center gap-2">
                 <Clock className="w-4 h-4" /> Sale ends in:
               </p>
-              <CountdownTimer targetDate={new Date('2024-12-31T23:59:59')} />
+              <CountdownTimer targetDate={new Date('2025-12-31T23:59:59')} />
             </div>
 
             <Button variant="holiday" size="lg" className="text-lg px-8">

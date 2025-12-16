@@ -1,12 +1,14 @@
 import { Facebook, Instagram, Twitter, Youtube, Mail, MapPin, Phone } from 'lucide-react';
 
+import { Link } from 'react-router-dom';
+
 const footerLinks = {
   shop: [
-    { label: 'New Arrivals', href: '#' },
-    { label: 'Best Sellers', href: '#' },
-    { label: 'Holiday Collection', href: '#' },
-    { label: 'Gift Cards', href: '#' },
-    { label: 'Sale', href: '#' },
+    { label: 'New Arrivals', href: '/new-arrivals' },
+    { label: 'Collections', href: '/collections' },
+    { label: 'Holiday Sale', href: '/holiday-sale' },
+    { label: 'Gifts', href: '/gifts' },
+    { label: 'Sale', href: '/holiday-sale' },
   ],
   support: [
     { label: 'Contact Us', href: '#' },
@@ -17,8 +19,8 @@ const footerLinks = {
   ],
   company: [
     { label: 'About Us', href: '#' },
-    { label: 'Careers', href: '#' },
-    { label: 'Press', href: '#' },
+    { label: 'Email Template', href: '/email-template' },
+    { label: 'Ad Mockups', href: '/ad-mockups' },
     { label: 'Sustainability', href: '#' },
     { label: 'Affiliates', href: '#' },
   ],
@@ -38,9 +40,9 @@ export const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12">
           {/* Brand Column */}
           <div className="lg:col-span-2">
-            <h3 className="font-serif text-2xl font-bold text-foreground mb-4">
-              <span className="text-gradient-holiday">LUXE</span>
-            </h3>
+            <Link to="/" className="font-serif text-2xl font-bold text-foreground mb-4 inline-block">
+              <span className="text-gradient-holiday">NOIR</span>
+            </Link>
             <p className="text-muted-foreground mb-6 max-w-sm">
               Premium lifestyle brand offering curated collections of luxury goods. 
               Elevate your everyday with exceptional quality.
@@ -50,11 +52,11 @@ export const Footer = () => {
             <div className="space-y-3 text-sm text-muted-foreground">
               <div className="flex items-center gap-3">
                 <Mail className="w-4 h-4 text-primary" />
-                <span>hello@luxe.com</span>
+                <span>hello@shopnoir.com</span>
               </div>
               <div className="flex items-center gap-3">
                 <Phone className="w-4 h-4 text-primary" />
-                <span>1-800-LUXE-NOW</span>
+                <span>1-800-NOIR-NOW</span>
               </div>
               <div className="flex items-center gap-3">
                 <MapPin className="w-4 h-4 text-primary" />
@@ -83,9 +85,9 @@ export const Footer = () => {
             <ul className="space-y-3">
               {footerLinks.shop.map((link) => (
                 <li key={link.label}>
-                  <a href={link.href} className="text-muted-foreground hover:text-primary transition-colors text-sm">
+                  <Link to={link.href} className="text-muted-foreground hover:text-primary transition-colors text-sm">
                     {link.label}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -122,7 +124,7 @@ export const Footer = () => {
         <div className="mt-16 pt-8 border-t border-border">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <p className="text-sm text-muted-foreground">
-              © {new Date().getFullYear()} LUXE. All rights reserved.
+              © {new Date().getFullYear()} NOIR. All rights reserved.
             </p>
             <div className="flex flex-wrap items-center gap-6 text-sm text-muted-foreground">
               <a href="#" className="hover:text-primary transition-colors">Privacy Policy</a>
