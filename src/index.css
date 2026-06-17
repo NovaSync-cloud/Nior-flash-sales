@@ -205,6 +205,13 @@
   }
 }
 
+/* Hide Lovable badge */
+#__lovable-badge,
+.lovable-badge,
+[data-lovable-badge] {
+  display: none !important;
+}
+
 /* Scrollbar styling */
 ::-webkit-scrollbar {
   width: 8px;
